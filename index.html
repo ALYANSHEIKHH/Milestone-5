@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Resume Builder</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="scripts.js" ></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Form to capture user input -->
+        <form id="resumeForm" class="form-container">
+            <h1 class="title" >Resume Builder</h1>
+
+            <!-- Personal Information -->
+            <section>
+                <h2>Personal Information</h2>
+                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="text" id="phone" placeholder="Phone Number" required>
+                <input type="text" id="location" placeholder="Location" required>
+               
+            </section>
+
+            <!-- Education -->
+            <section>
+                <h2>Education</h2>
+                <div id="educationSection">
+                    <div class="education-entry">
+                        <input type="text" placeholder="Degree" required>
+                        <input type="text" placeholder="Institution" required>
+                        <input type="text" placeholder="Year" required>
+                    </div>
+                </div>
+                <button type="button" id="addEducation">Add More Education</button>
+            </section>
+
+            <!-- Work Experience -->
+            <section>
+                <h2>Work Experience</h2>
+                <div id="workExperienceSection">
+                    <div class="work-entry">
+                        <input type="text" placeholder="Job Title" required>
+                        <input type="text" placeholder="Company" required>
+                        <input type="text" placeholder="Years" required>
+                        <textarea placeholder="Description" required></textarea>
+                    </div>
+                </div>
+                <button type="button" id="addWorkExperience">Add More Experience</button>
+            </section>
+
+            <!-- Skills -->
+            <section>
+                <h2>Skills</h2>
+                <input type="text" id="skills" placeholder="Enter skills separated by commas" required>
+            </section>
+
+            <button type="submit">Generate Resume</button>
+           
+                <button id="share-link">Share Resume</button>
+
+                <button id="download-pdf">Download as PDF</button>
+             
+            </div>
+        </form>
+
+        <!-- Dynamically generated resume -->
+        <div id="resumeOutput" class="resume-output"></div>
+    </div>
+
+    <script>
+        // download pdf code
+        const downloadPdf = document.getElementById('download-pdf');
+        downloadPdf.addEventListener('click', () => {
+          const resumeOutput = document.getElementById('resumeOutput');
+          const pdf = new jsPDF();
+          pdf.html(resumeOutput, {
+            callback: function(pdf) {
+              pdf.save('resume.pdf');
+            }
+          });
+        });
+
+        // share link code
+        const shareLink = document.getElementById('share-link');
+        shareLink.addEventListener('click', () => {
+          const resumeOutput = document.getElementById('resumeOutput');
+          const shareUrl = window.location.href;
+          navigator.clipboard.writeText(shareUrl);
+          alert('Link copied to clipboard!');
+        });
+
+
+        // Add more Education fields
+        const addEducationButton = document.getElementById('addEducation');
+        addEducationButton.addEventListener('click', () => {
+          const educationSection = document.getElementById('educationSection');
+          const newEntry = document.createElement('div');
+          newEntry.classList.add('education-entry');
+          newEntry.innerHTML = `
+            <input type="text" placeholder="Degree" required>
+            <input type="text" placeholder="Institution" required>
+            <input type="text" placeholder="Year" required>
+          `;
+          educationSection.appendChild(newEntry);
+        });
+
+        // Add more Work Experience fields
+    </script>
+
+    
+</body>
+</html>
+
